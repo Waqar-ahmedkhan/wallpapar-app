@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
-const index = () => {
+const Index = () => {
   return (
     <View>
-      <Text>hello world</Text>
+      <Text>Index: is it working or not?</Text>
+      {/* Button component - Correct usage */}
+      <Button title="Sign Up" onPress={() => console.log('Button Pressed!')} />
     </View>
-  )
-}
+  );
+};
 
-export default index
+export default Index;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
