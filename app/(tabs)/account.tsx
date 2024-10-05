@@ -1,15 +1,19 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Link } from 'expo-router'
 
-const Foryou = () => {
+const account = () => {
   return (
     <SafeAreaView>
-      <Text>Foryou</Text>
+      <Text>account</Text>
+      <Link href={"/accountinfo"}>
+      <Text> account_information</Text>
+      </Link>
     </SafeAreaView>
   )
 }
 
-export default Foryou
+export default account
 
 const styles = StyleSheet.create({})
