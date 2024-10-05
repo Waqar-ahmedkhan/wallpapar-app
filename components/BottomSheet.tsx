@@ -15,6 +15,7 @@ export const DownloadPicture = () => {
   return (
     <View style={styles.container}>
       <BottomSheet
+         snapPoints={["99"]}
         ref={bottomSheetRef}
         onChange={handleSheetChanges}
       >
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: 'grey',
+    
   },
   contentContainer: {
     flex: 1,

@@ -6,9 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 const _layout = () => {
    return <GestureHandlerRootView>
       <Slot/>
-       </GestureHandlerRootView>
-
-  
+       </GestureHandlerRootView> 
 }
 
 export default _layout
