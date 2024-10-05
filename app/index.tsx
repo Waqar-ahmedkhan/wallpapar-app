@@ -1,37 +1,40 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { Link, useRouter } from 'expo-router';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Link } from 'expo-router';
+import Icon from 'react-native-vector-icons/Ionicons'; // For icons
 
 const Index = () => {
-  const router = useRouter(); // Correct hook from expo-router
-  
   return (
     <View style={styles.container}>
-      {/* Navigation Links */}
-      <Link href="/Foryou">
-        <Text style={styles.linkText}>Link to ForYou Page</Text>
-      </Link>
-      <Link href="/explore">
-        <Text style={styles.linkText}>Link to Explore Page</Text>
-      </Link>
-      <Link href="/account">
-        <Text style={styles.linkText}>Link to Account Page</Text>
-      </Link>
+      <Text style={styles.header}>Welcome</Text>
 
-      {/* Button Component - Corrected Navigation */}
-      <Button title="Sign Up" onPress={() => router.push('/Foryou')} />
+      <View style={styles.content}>
+        {/* Content or main screens can be added here */}
+        <Text style={styles.screenText}>This is the main content area</Text>
+      </View>
 
-      {/* Bottom Bar for Testing */}
+      {/* Bottom Tab Bar */}
       <View style={styles.bottomBar}>
-        <Link href="/Foryou">
-          <Text style={styles.barText}>Home</Text>
-        </Link>
-        <Link href="/explore">
-          <Text style={styles.barText}>explore</Text>
-        </Link>
-        <Link href="/account">
-          <Text style={styles.barText}>account</Text>
-        </Link>
+        <TouchableOpacity style={styles.tabItem}>
+          <Link href="/Foryou">
+            <Icon name="heart-outline" size={28} color="#2C6BED" />
+            <Text style={styles.tabText}>For You</Text>
+          </Link>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.tabItem}>
+          <Link href="/account">
+            <Icon name="person-outline" size={28} color="#2C6BED" />
+            <Text style={styles.tabText}>Account</Text>
+          </Link>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.tabItem}>
+          <Link href="/explore">
+            <Icon name="compass-outline" size={28} color="#2C6BED" />
+            <Text style={styles.tabText}>Explore</Text>
+          </Link>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -42,25 +45,40 @@ export default Index;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5F5F5',
+    justifyContent: 'space-between',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#333',
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  linkText: {
+  screenText: {
     fontSize: 18,
-    color: 'blue',
-    marginVertical: 10,
+    color: '#555',
   },
   bottomBar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '100%',
-    padding: 10,
-    backgroundColor: '#ddd',
-    position: 'absolute',
-    bottom: 0,
+    paddingVertical: 10,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    elevation: 10,
   },
-  barText: {
-    fontSize: 16,
-    color: 'black',
+  tabItem: {
+    alignItems: 'center',
+  },
+  tabText: {
+    fontSize: 12,
+    color: '#2C6BED',
+    marginTop: 5,
   },
 });
