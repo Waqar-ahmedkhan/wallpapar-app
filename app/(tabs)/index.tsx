@@ -1,32 +1,61 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import React from 'react';
-import { View, Text } from 'react-native';
-const Tab = createMaterialTopTabNavigator();
+import { Button, Image, StyleSheet, Text, View, useColorScheme } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { useWallpaper } from '@/hooks/useWallpapar';
 
-function MyTabs() {
+const Explore = () => {
+  const wallpaper = useWallpaper(); // Get random wallpaper
+  const colorScheme = useColorScheme(); // Detect system theme (light/dark)
+
   return (
-    <Tab.Navigator style={{paddingTop: "5%"}}>
-      <Tab.Screen name="suggested" component={HomeScreen} />
-      <Tab.Screen name="liked" component={SettingsScreen} />
-      <Tab.Screen name="library" component={SettingsScreen} />
-    </Tab.Navigator>
-  );
-}
+    <SafeAreaView style={styles.container}>
+      <ParallaxScrollView
+        headerBackgroundColor={{
+          dark: 'black',
+          light: 'white', 
+        }}
+        headerImage={
+          <Image
+            style={styles.headerImage}
+            source={{ uri: wallpaper.url }} // Pass the wallpaper URL
+          />
+        }
+      >
+        <View style={styles.content}>
+          <Text style={styles.welcomeText}>
+            Welcome to the Explore Screen!
+          </Text>
 
-export default MyTabs;
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
+          {/* Add Button or Additional UI if needed */}
+          {/* <Button title="Show Bottom Sheet" onPress={() => setShowPic(true)} /> */}
+        </View>
+      </ParallaxScrollView>
+    </SafeAreaView>
   );
-}
+};
 
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings Screen</Text> 
-    </View>
-  );
-}
+export default Explore;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerImage: {
+    flex: 1,
+    height: 300, // Adjust header image height as needed
+    resizeMode: 'cover', // Ensure the image covers the space
+  },
+  content: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcomeText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+  },
+});

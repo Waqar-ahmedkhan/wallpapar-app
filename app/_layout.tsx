@@ -6,7 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 const _layout = () => {
    return <GestureHandlerRootView>
       <Stack screenOptions={{headerShown: false}}>
-         <Stack.Screen name='(accountinfo)/accountinfo' options={{headerShown:true, headerTitle:"account info", headerBackVisible: true}} />
+         <Stack.Screen name='(accountinfo)/accountinfo' options={{headerShown:true, headerTitle:"", headerBackVisible: true}} />
       </Stack>
        </GestureHandlerRootView> 
 }
