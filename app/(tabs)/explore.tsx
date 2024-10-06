@@ -7,16 +7,17 @@ const Explore = () => {
   const [showPic, setShowPic] = useState(false);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor:"red" }}>
+      <View style={{ flex: 1, backgroundColor:"blue" }}>
         <Button
           title="Show Bottom Sheet"
           onPress={() => {
             setShowPic(true);
           }}
         />
+         {showPic && <DownloadPicture onClose={() => setShowPic(false)} />}
       </View>
-      {showPic && <DownloadPicture onClose={() => setShowPic(false)} />}
+     
     </SafeAreaView>
   );
 };
