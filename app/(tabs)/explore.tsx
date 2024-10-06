@@ -7,8 +7,8 @@ const Explore = () => {
   const [showPic, setShowPic] = useState(false);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor:"red" }}>
-      <View style={{ flex: 1, backgroundColor:"blue" }}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1}}>
         <Button
           title="Show Bottom Sheet"
           onPress={() => {

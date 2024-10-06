@@ -5,7 +5,7 @@ const Tab = createMaterialTopTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator style={{paddingTop: "5%"}}>
       <Tab.Screen name="suggested" component={HomeScreen} />
       <Tab.Screen name="liked" component={SettingsScreen} />
       <Tab.Screen name="library" component={SettingsScreen} />
