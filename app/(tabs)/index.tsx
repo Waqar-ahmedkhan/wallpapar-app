@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, View, useColorScheme, useWindowDimensions } from 'react-native';
+import { Image, StyleSheet, View,  useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -72,7 +72,9 @@ const styles = StyleSheet.create({
   wallpaperCard: {
     flex: 1,
     margin: 4,
-    height: 200, // Adjust this value to change the height of each card
+    height: 250,
+    width: "100%" 
+    // Adjust this value to change the height of each card
   },
   separator: {
     height: 8,
