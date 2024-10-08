@@ -1,30 +1,30 @@
-export interface wallpaper{
-  url: string,
-  name: string
-
+export interface WallpaperType {
+  url: string;
+  name: string;
 }
+
 export function useWallpaper() {
-  const wallpapers = [
+  const wallpapers: WallpaperType[] = [
     {
       url: "https://ideogram.ai/assets/image/lossless/response/TVSlKZYUQrKd6O9uPzVyEw",
-      "name": "Last Night"
+      name: "Last Night",
     },
     {
       url: "https://ideogram.ai/assets/progressive-image/balanced/response/JNKysdHPQg-dwbTbXwfhJg",
-      "name": "Sunrise Bliss"
+      name: "Sunrise Bliss",
     },
     {
       url: "https://ideogram.ai/assets/progressive-image/balanced/response/sILKkQb9QXOHbfuaT83EVQ",
-      "name": "Mountain Escape"
+      name: "Mountain Escape",
     },
     {
       url: "https://ideogram.ai/assets/image/lossless/response/9Gnlqd1aQFiLc4800qsIjg",
-      "name": "Ocean Serenity"
-    }
+      name: "Ocean Serenity",
+    },
   ];
 
   // Randomly select a wallpaper
   const randomWallpaper = wallpapers[Math.floor(Math.random() * wallpapers.length)];
 
-  return randomWallpaper;
+  return { randomWallpaper, wallpapers };
 }

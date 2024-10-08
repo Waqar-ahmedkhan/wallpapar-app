@@ -1,11 +1,11 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { wallpaper as WallpaperType } from '@/hooks/useWallpapar';
+import { WallpaperType } from '@/hooks/useWallpapar';
 
 const WallpaparCard = ({ wallpaper }: { wallpaper: WallpaperType }) => {
   return (
-    <View>
-      <Image source={{ uri: wallpaper.url }} style={styles.images} />
+    <View style={styles.card}>
+      <Image source={{ uri: wallpaper.url }} style={styles.image} />
       <Text style={styles.text}>{wallpaper.name}</Text>
     </View>
   );
@@ -14,8 +14,12 @@ const WallpaparCard = ({ wallpaper }: { wallpaper: WallpaperType }) => {
 export default WallpaparCard;
 
 const styles = StyleSheet.create({
-  images: {
-    flex: 1,
+  card: {
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  image: {
+    width: '100%',
     height: 300,
     borderRadius: 10,
     resizeMode: 'cover',

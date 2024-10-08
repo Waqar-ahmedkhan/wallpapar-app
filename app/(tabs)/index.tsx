@@ -1,56 +1,33 @@
-import { Button, Image, StyleSheet, Text, View, useColorScheme } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import { FlatList, Image, StyleSheet, SafeAreaView, useColorScheme, View } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { useWallpaper } from '@/hooks/useWallpapar';
 import WallpaparCard from '@/components/WallpaparCard';
+import { useWallpaper, WallpaperType } from '@/hooks/useWallpapar';
 
 const Explore = () => {
-  const wallpapers = useWallpaper(); // Get random wallpaper
+  const { randomWallpaper, wallpapers } = useWallpaper(); // Fetch wallpapers and a random wallpaper
   const colorScheme = useColorScheme(); // Detect system theme (light/dark)
+
+  // Function to render each wallpaper card
+  const renderWallpaper = ({ item }: { item: WallpaperType }) => <WallpaparCard wallpaper={item} />;
 
   return (
     <SafeAreaView style={styles.container}>
       <ParallaxScrollView
-        headerBackgroundColor={{
-          dark: 'black',
-          light: 'white', 
-        }}
+        headerBackgroundColor={{dark: "black", light: "white"}}
         headerImage={
           <Image
             style={styles.headerImage}
-            source={{ uri: wallpapers.url }} // Pass the wallpaper URL
+            source={{ uri: randomWallpaper.url }} // Display the random wallpaper as the header image
           />
         }
       >
-
-
-     <View style={styles.container}>
-
-    
-
-        <View style={styles.container}>
-          {/* <Text style={styles.welcomeText}>
-            Welcome to the Explore Screen!
-          </Text> */}
-
-          {wallpapers.map((w: wallpapers) =>  <WallpaparCard  wallpaper={w} /> )}
-
-          {/* Add Button or Additional UI if needed */}
-          {/* <Button title="Show Bottom Sheet" onPress={() => setShowPic(true)} /> */}
-        </View>
-
-        <View style={styles.container}>
-          {/* <Text style={styles.welcomeText}>
-            Welcome to the Explore Screen!
-          </Text> */}
-
-          {wallpapers.map((w: wallpapers) =>  <WallpaparCard  wallpaper={w} /> )}
-
-          {/* Add Button or Additional UI if needed */}
-          {/* <Button title="Show Bottom Sheet" onPress={() => setShowPic(true)} /> */}
-        </View>
-        </View>
+        <FlatList
+          data={wallpapers}
+          renderItem={renderWallpaper}
+          keyExtractor={(item) => item.url} // Use the URL as the unique key
+          contentContainerStyle={styles.content}
+        />
       </ParallaxScrollView>
     </SafeAreaView>
   );
@@ -59,29 +36,16 @@ const Explore = () => {
 export default Explore;
 
 const styles = StyleSheet.create({
-  containers: {
-    flex: 1,
-    flexDirection: "row",
-  },
   container: {
     flex: 1,
-    padding: 10
+    padding: 10,
   },
   headerImage: {
     flex: 1,
-    height: 300, // Adjust header image height as needed
-    resizeMode: 'cover', // Ensure the image covers the space
+    height: 300,
+    resizeMode: 'cover',
   },
   content: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  welcomeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    textAlign: 'center',
+    paddingVertical: 10,
   },
 });
