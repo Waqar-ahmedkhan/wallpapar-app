@@ -1,20 +1,30 @@
 import React from 'react';
-import { FlatList, Image, StyleSheet, SafeAreaView, useColorScheme, View } from 'react-native';
+import { FlatList, Image, StyleSheet, SafeAreaView, useColorScheme, View, ActivityIndicator } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import WallpaparCard from '@/components/WallpaparCard';
 import { useWallpaper, WallpaperType } from '@/hooks/useWallpapar';
 
 const Explore = () => {
-  const { randomWallpaper, wallpapers } = useWallpaper(); // Fetch wallpapers and a random wallpaper
+  const { randomWallpaper, wallpapers, isLoading } = useWallpaper(); // Assume isLoading handles the loading state
   const colorScheme = useColorScheme(); // Detect system theme (light/dark)
+  const headerBackgroundColor = colorScheme === 'dark' ? 'black' : 'white';
 
   // Function to render each wallpaper card
   const renderWallpaper = ({ item }: { item: WallpaperType }) => <WallpaparCard wallpaper={item} />;
 
+  // Render a loading indicator if the wallpapers are still loading
+  if (isLoading || !randomWallpaper) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={headerBackgroundColor} />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ParallaxScrollView
-        headerBackgroundColor={{dark: "black", light: "white"}}
+        headerBackgroundColor={{dark:"black", light:"white"}}
         headerImage={
           <Image
             style={styles.headerImage}
@@ -27,6 +37,11 @@ const Explore = () => {
           renderItem={renderWallpaper}
           keyExtractor={(item) => item.url} // Use the URL as the unique key
           contentContainerStyle={styles.content}
+          getItemLayout={(data, index) => ({
+            length: 100, // Approximate height of each item
+            offset: 100 * index,
+            index,
+          })}
         />
       </ParallaxScrollView>
     </SafeAreaView>
@@ -47,5 +62,10 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingVertical: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
