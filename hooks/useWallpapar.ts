@@ -16,6 +16,11 @@ export function useWallpaper() {
   const fetchWallpapers = () => {
     const staticWallpapers: WallpaperType[] = [
       {
+        url: "https://ideogram.ai/assets/progressive-image/balanced/response/5z-RDaoCTfK45Bpw8TEBYQ",
+        name: "colors paletter"
+
+      },
+      {
         url: "https://ideogram.ai/assets/image/lossless/response/TVSlKZYUQrKd6O9uPzVyEw",
         name: "Last Night",
       },

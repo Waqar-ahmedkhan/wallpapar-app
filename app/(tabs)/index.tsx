@@ -1,48 +1,49 @@
 import React from 'react';
-import { FlatList, Image, StyleSheet, SafeAreaView, useColorScheme, View, ActivityIndicator } from 'react-native';
+import { Image, StyleSheet, View, useColorScheme, useWindowDimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlashList } from '@shopify/flash-list';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import WallpaparCard from '@/components/WallpaparCard';
 import { useWallpaper, WallpaperType } from '@/hooks/useWallpapar';
+import WallpaparCard from '@/components/WallpaparCard';
 
 const Explore = () => {
-  const { randomWallpaper, wallpapers, isLoading } = useWallpaper(); // Assume isLoading handles the loading state
-  const colorScheme = useColorScheme(); // Detect system theme (light/dark)
-  const headerBackgroundColor = colorScheme === 'dark' ? 'black' : 'white';
+  const { randomWallpaper, wallpapers } = useWallpaper();
 
-  // Function to render each wallpaper card
-  const renderWallpaper = ({ item }: { item: WallpaperType }) => <WallpaparCard wallpaper={item} />;
+  const { width: screenWidth } = useWindowDimensions();
 
-  // Render a loading indicator if the wallpapers are still loading
-  if (isLoading || !randomWallpaper) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={headerBackgroundColor} />
-      </View>
-    );
-  }
+  const renderWallpaper = ({ item }: { item: WallpaperType }) => (
+    <WallpaparCard wallpaper={item} style={styles.wallpaperCard} />
+  );
+
+  const headerImage = randomWallpaper ? (
+    <Image
+      style={styles.headerImage}
+      source={{ uri: randomWallpaper.url }}
+      resizeMode="cover"
+    />
+  ) : (
+    <View style={styles.placeholderHeader} />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
       <ParallaxScrollView
-        headerBackgroundColor={{dark:"black", light:"white"}}
-        headerImage={
-          <Image
-            style={styles.headerImage}
-            source={{ uri: randomWallpaper.url }} // Display the random wallpaper as the header image
-          />
-        }
+        headerBackgroundColor={{
+          dark: 'black',
+          light: 'white',
+        }}
+        headerImage={headerImage}
       >
-        <FlatList
-          data={wallpapers}
-          renderItem={renderWallpaper}
-          keyExtractor={(item) => item.url} // Use the URL as the unique key
-          contentContainerStyle={styles.content}
-          getItemLayout={(data, index) => ({
-            length: 100, // Approximate height of each item
-            offset: 100 * index,
-            index,
-          })}
-        />
+        <View style={styles.content}>
+          <FlashList
+            data={wallpapers}
+            renderItem={renderWallpaper}
+            estimatedItemSize={screenWidth / 2}
+            numColumns={2}
+            keyExtractor={(item) => item.url}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+          />
+        </View>
       </ParallaxScrollView>
     </SafeAreaView>
   );
@@ -53,19 +54,27 @@ export default Explore;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
   },
   headerImage: {
-    flex: 1,
-    height: 300,
+    width: '100%',
+    height: 350,
     resizeMode: 'cover',
   },
-  content: {
-    paddingVertical: 10,
+  placeholderHeader: {
+    height: 350,
+    backgroundColor: '#ccc', 
+    width: '100%',
   },
-  loadingContainer: {
+  content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 8,
+  },
+  wallpaperCard: {
+    flex: 1,
+    margin: 4,
+    height: 200, // Adjust this value to change the height of each card
+  },
+  separator: {
+    height: 8,
   },
 });
