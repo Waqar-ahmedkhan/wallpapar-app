@@ -1,30 +1,33 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 
-export const DownloadPicture = ({onClose}: {onClose: ()=>  void}) => {
-  // ref
+interface DownloadPictureProps {
+  onClose: () => void;
+}
+
+export const DownloadPicture: React.FC<DownloadPictureProps> = ({ onClose }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  // callbacks
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
-  }, []);
+    if (index === -1) {
+      onClose();
+    }
+  }, [onClose]);
 
-  // renders
   return (
     <View style={styles.container}>
       <BottomSheet
-       onClose={onClose}
-         snapPoints={["99"]}
         ref={bottomSheetRef}
+        index={1}
+        snapPoints={['25%', '50%', '90%']}
         onChange={handleSheetChanges}
         enablePanDownToClose={true}
-        handleIndicatorStyle={{height: 0}}
       >
-        <BottomSheetView style={styles.contentContainer}>
+        <View style={styles.contentContainer}>
           <Text>Awesome 🎉</Text>
-        </BottomSheetView>
+        </View>
       </BottomSheet>
     </View>
   );
@@ -33,9 +36,16 @@ export const DownloadPicture = ({onClose}: {onClose: ()=>  void}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    },
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
   contentContainer: {
     flex: 1,
     alignItems: 'center',
+    padding: 16,
   },
 });

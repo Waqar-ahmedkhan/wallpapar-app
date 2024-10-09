@@ -1,7 +1,6 @@
-import { Image, Pressable, StyleSheet, Text, useColorScheme, View, ViewStyle } from 'react-native';
 import React from 'react';
+import { Image, Pressable, StyleSheet, Text, useColorScheme, View, ViewStyle } from 'react-native';
 import { WallpaperType } from '@/hooks/useWallpapar';
-import { ThemedText } from './ThemedText';
 import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -11,17 +10,17 @@ interface WallpaparCardProps {
   onPress: () => void;
 }
 
- const WallpaparCard: React.FC<WallpaparCardProps> = ({ onPress, wallpaper, style }) => {
+const WallpaparCard: React.FC<WallpaparCardProps> = ({ onPress, wallpaper, style }) => {
   const theme = useColorScheme() ?? 'light';
 
   return (
-    <Pressable onPress={onPress}> {/* Added onPress prop here */}
+    <Pressable onPress={onPress}>
       <View style={[styles.card, style]}>
         <Image source={{ uri: wallpaper.url }} style={styles.image} />
-        <View style={styles.text}>
-          <ThemedText style={{ fontSize: 16, color: "white" }}>{wallpaper.name}</ThemedText>
+        <View style={styles.textContainer}>
+          <Text style={styles.wallpaperName}>{wallpaper.name}</Text>
           <Ionicons
-            name={"heart"}
+            name="heart"
             size={18}
             color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
           />
@@ -44,24 +43,23 @@ const styles = StyleSheet.create({
     aspectRatio: 1, 
     borderRadius: 20,
     resizeMode: 'cover',
-   
-  
   },
-  text: {
+  textContainer: {
     position: 'absolute',
     bottom: 0,
-    display: 'flex',
-    backgroundColor: "rgb(0, 0, 0.1)",
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: 'white',
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    width: '100%',
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderRadius: 10,
-    
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  wallpaperName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
