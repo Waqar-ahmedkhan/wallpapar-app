@@ -17,7 +17,7 @@ export function useWallpaper() {
     const staticWallpapers: WallpaperType[] = [
       {
         url: "https://ideogram.ai/assets/progressive-image/balanced/response/5z-RDaoCTfK45Bpw8TEBYQ",
-        name: "colors paletter"
+        name: "Colors Eyes"
 
       },
       {

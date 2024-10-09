@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet, View,  useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { useWallpaper, WallpaperType } from '@/hooks/useWallpapar';
 import WallpaparCard from '@/components/WallpaparCard';
+import { DownloadPicture } from '@/components/BottomSheet';
 
 const Explore = () => {
   const { randomWallpaper, wallpapers } = useWallpaper();
+  const [selectedWallpaper, setselectedWallpaper] =  useState<WallpaperType | null>(null)
 
   const { width: screenWidth } = useWindowDimensions();
 
   const renderWallpaper = ({ item }: { item: WallpaperType }) => (
-    <WallpaparCard wallpaper={item} style={styles.wallpaperCard} />
+    <WallpaparCard onPress={()=> {
+      setselectedWallpaper(item)
+}} wallpaper={item} style={styles.wallpaperCard} />
   );
 
   const headerImage = randomWallpaper ? (
@@ -45,6 +49,10 @@ const Explore = () => {
           />
         </View>
       </ParallaxScrollView>
+      {selectedWallpaper &&  <DownloadPicture onClose={() => {
+        setselectedWallpaper(null);
+      } } 
+ />}
     </SafeAreaView>
   );
 };
