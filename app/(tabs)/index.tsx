@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   headerImage: {
     width: '100%',
-    height: 350,
+    height: 450,
     resizeMode: 'cover',
   },
   placeholderHeader: {
@@ -67,16 +67,16 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 8,
+    
   },
   wallpaperCard: {
     flex: 1,
     margin: 4,
-    height: 250,
+    height: 200,
     width: "100%" 
-    // Adjust this value to change the height of each card
+    
   },
   separator: {
-    height: 8,
+    height: 10,
   },
 });
