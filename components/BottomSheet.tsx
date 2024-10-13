@@ -26,12 +26,12 @@ export const DownloadPicture: React.FC<DownloadPictureProps> = ({ onClose, wallp
         snapPoints={['25%', '50%', '90%']}
         onChange={handleSheetChanges}
         enablePanDownToClose={true}
+        backgroundStyle={styles.bottomSheetBackground}
       >
         <View style={styles.contentContainer}>
           <Image source={{ uri: wallpaper.url }} style={styles.wallpaperPreview} />
           <Text style={styles.wallpaperName}>{wallpaper.name}</Text>
           <Text>Awesome 🎉</Text>
-          {/* Add more content or buttons for downloading, etc. */}
         </View>
       </BottomSheet>
     </View>
@@ -47,11 +47,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     top: 0,
     backgroundColor: 'rgba(0,0,0,0.5)',
+    zIndex: 1000, // Ensure it's on top of other elements
+  },
+  bottomSheetBackground: {
+    backgroundColor: 'white', // Explicitly set background to white
   },
   contentContainer: {
     flex: 1,
     alignItems: 'center',
     padding: 16,
+    backgroundColor: 'white', // Ensure content area is also white
   },
   wallpaperPreview: {
     width: 200,
@@ -63,5 +68,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: 'black', // Ensure text is visible on white background
   },
 });
