@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, View, useWindowDimensions, Text } from 'react-native';
+import { Image, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -50,10 +50,11 @@ const Explore = () => {
           />
         </View>
       </ParallaxScrollView>
-      {selectedWallpaper  && (
+      {selectedWallpaper && (
         <DownloadPicture
+          wallpaper={selectedWallpaper}
           onClose={() => {
-            console.log('Closing DownloadPicture'); // Debug log
+            console.log('Closing DownloadPicture');
             setSelectedWallpaper(null);
           }}
         />
@@ -63,6 +64,7 @@ const Explore = () => {
 };
 
 export default Explore;
+
 
 const styles = StyleSheet.create({
   container: {
