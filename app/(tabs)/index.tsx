@@ -63,9 +63,6 @@ const Explore = () => {
   );
 };
 
-export default Explore;
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -93,3 +90,5 @@ const styles = StyleSheet.create({
     height: 10,
   },
 });
+
+export default Explore;
