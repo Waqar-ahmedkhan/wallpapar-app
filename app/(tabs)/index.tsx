@@ -6,20 +6,23 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { useWallpaper, WallpaperType } from '@/hooks/useWallpapar';
 import { DownloadPicture } from '@/components/BottomSheet';
 import WallpaparCard from '@/components/WallpaparCard';
+import { ThemedView } from '@/components/ThemedView';
 
 const Explore = () => {
   const { randomWallpaper, wallpapers } = useWallpaper();
   const [selectedWallpaper, setSelectedWallpaper] = useState<WallpaperType | null>(null);
   const { width: screenWidth } = useWindowDimensions();
 
+  // Render each wallpaper as a card
   const renderWallpaper = ({ item }: { item: WallpaperType }) => (
     <WallpaparCard
-      onPress={() => setSelectedWallpaper(item)}
+      onPress={() => setSelectedWallpaper(item)} // Set wallpaper on press
       wallpaper={item}
       style={styles.wallpaperCard}
     />
   );
 
+  // Header image for the ParallaxScrollView
   const headerImage = randomWallpaper ? (
     <Image
       style={styles.headerImage}
@@ -39,7 +42,7 @@ const Explore = () => {
         }}
         headerImage={headerImage}
       >
-        <View style={styles.content}>
+        <ThemedView style={styles.content}>
           <FlashList
             data={wallpapers}
             renderItem={renderWallpaper}
@@ -48,14 +51,15 @@ const Explore = () => {
             keyExtractor={(item) => item.url}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
           />
-        </View>
+        </ThemedView>
       </ParallaxScrollView>
+
+      {/* Render BottomSheet when wallpaper is selected */}
       {selectedWallpaper && (
         <DownloadPicture
           wallpaper={selectedWallpaper}
           onClose={() => {
-            console.log('Closing DownloadPicture');
-            setSelectedWallpaper(null);
+            setSelectedWallpaper(null); // Reset wallpaper on close
           }}
         />
       )}

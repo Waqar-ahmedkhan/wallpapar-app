@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { WallpaperType } from '@/hooks/useWallpapar';
 
@@ -11,69 +11,62 @@ interface DownloadPictureProps {
 export const DownloadPicture: React.FC<DownloadPictureProps> = ({ onClose, wallpaper }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-    if (index === -1) {
-      onClose();
-    }
-  }, [onClose]);
+  const handleSheetChanges = useCallback(
+    (index: number) => {
+      console.log('handleSheetChanges', index);
+      if (index === -1) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   return (
-    <View style={styles.container}>
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={1}
-        snapPoints={['25%', '50%', '90%']}
-        onChange={handleSheetChanges}
-        enablePanDownToClose={true}
-        backgroundStyle={styles.bottomSheetBackground}
-        handleIndicatorStyle={styles.handleIndicator}
-      >
-        <View style={styles.contentContainer}>
-          <Image source={{ uri: wallpaper.url }} style={styles.wallpaperPreview} />
-          <Text style={styles.wallpaperName}>{wallpaper.name}</Text>
-          <Text style={styles.text}>Awesome 🎉</Text>
-        </View>
-      </BottomSheet>
-    </View>
+    <BottomSheet
+      ref={bottomSheetRef}
+      index={1}
+      snapPoints={['50%']}
+      onChange={handleSheetChanges}
+      enablePanDownToClose={true}
+      handleIndicatorStyle={styles.handleIndicator}
+      backgroundStyle={styles.bottomSheetBackground} // Added this to ensure white background
+      handleStyle={{ height: 0 }}
+    >
+      <View style={styles.contentContainer}>
+        <Image source={{ uri: wallpaper.url }} style={styles.wallpaperPreview} />
+        <Button title="Download" onPress={() => console.log('Download button clicked')} />
+        <Text style={styles.wallpaperName}>{wallpaper.name}</Text>
+      </View>
+    </BottomSheet>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
   bottomSheetBackground: {
-    backgroundColor: 'white',
-  },
-  handleIndicator: {
-    backgroundColor: '#00000040',
+    backgroundColor: 'white', // Explicitly setting the background color of the bottom sheet to white
   },
   contentContainer: {
     flex: 1,
     alignItems: 'center',
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: 'white', // Ensuring the content container also has a white background
   },
   wallpaperPreview: {
-    width: 200,
-    height: 200,
-    borderRadius: 10,
+    width: '80%',
+    height: '50%',
     marginBottom: 16,
+    borderRadius: 10,
+    resizeMode: 'cover',
   },
   wallpaperName: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
     color: 'black',
+    marginTop: 8,
   },
-  text: {
-    color: 'black',
+  handleIndicator: {
+    backgroundColor: '#00000040',
   },
 });
+
+export default DownloadPicture;
