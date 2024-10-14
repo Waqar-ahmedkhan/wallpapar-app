@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlashList } from '@shopify/flash-list';
+import { Image, StyleSheet, View, SafeAreaView } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { useWallpaper, WallpaperType } from '@/hooks/useWallpapar';
+import { useWallpaper } from '@/hooks/useWallpapar';
 import { DownloadPicture } from '@/components/BottomSheet';
-import WallpaparCard from '@/components/WallpaparCard';
+import AllWallpapars from '@/components/AllWallpapars';
 
 const Explore = () => {
   const { randomWallpaper, wallpapers } = useWallpaper();
-  const [selectedWallpaper, setSelectedWallpaper] = useState<WallpaperType | null>(null);
-  const { width: screenWidth } = useWindowDimensions();
-
-  const renderWallpaper = ({ item }: { item: WallpaperType }) => (
-    <WallpaparCard
-      onPress={() => setSelectedWallpaper(item)}
-      wallpaper={item}
-      style={styles.wallpaperCard}
-    />
-  );
+  const [selectedWallpaper, setSelectedWallpaper] = useState(null);
 
   const headerImage = randomWallpaper ? (
     <Image
@@ -39,24 +28,12 @@ const Explore = () => {
         }}
         headerImage={headerImage}
       >
-        <View style={styles.content}>
-          <FlashList
-            data={wallpapers}
-            renderItem={renderWallpaper}
-            estimatedItemSize={screenWidth / 2}
-            numColumns={2}
-            keyExtractor={(item) => item.url}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
-        </View>
+        <AllWallpapars wallpapers={wallpapers} onSelectWallpaper={setSelectedWallpaper} />
       </ParallaxScrollView>
       {selectedWallpaper && (
         <DownloadPicture
           wallpaper={selectedWallpaper}
-          onClose={() => {
-            console.log('Closing DownloadPicture');
-            setSelectedWallpaper(null);
-          }}
+          onClose={() => setSelectedWallpaper(null)}
         />
       )}
     </SafeAreaView>
@@ -76,18 +53,6 @@ const styles = StyleSheet.create({
     height: 350,
     backgroundColor: '#ccc',
     width: '100%',
-  },
-  content: {
-    flex: 1,
-  },
-  wallpaperCard: {
-    flex: 1,
-    margin: 4,
-    height: 200,
-    width: '100%',
-  },
-  separator: {
-    height: 10,
   },
 });
 

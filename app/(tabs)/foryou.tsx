@@ -1,32 +1,67 @@
+import React, { useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import React from 'react';
-import { View, Text } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { useWallpaper } from '@/hooks/useWallpapar';
+import AllWallpapars from '@/components/AllWallpapars';
+
 const Tab = createMaterialTopTabNavigator();
 
 function MyTabs() {
+  // Fetch all wallpapers once and share it with all screens
+  const { wallpapers } = useWallpaper();
+
   return (
-    <Tab.Navigator style={{paddingTop: "5%"}}>
-      <Tab.Screen name="suggested" component={HomeScreen} />
-      <Tab.Screen name="liked" component={SettingsScreen} />
-      <Tab.Screen name="library" component={SettingsScreen} />
+    <Tab.Navigator style={{ paddingTop: '5%' }}>
+      <Tab.Screen name="Suggested">
+        {() => <SuggestedScreen wallpapers={wallpapers} />}
+      </Tab.Screen>
+      <Tab.Screen name="Liked">
+        {() => <LikedScreen wallpapers={wallpapers} />}
+      </Tab.Screen>
+      <Tab.Screen name="Library">
+        {() => <LibraryScreen wallpapers={wallpapers} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
 
 export default MyTabs;
 
-function HomeScreen() {
+// Suggested Tab Screen
+function SuggestedScreen({ wallpapers }: { wallpapers: any[] }) {
+  const [selectedWallpaper, setSelectedWallpaper] = useState(null);
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <AllWallpapars wallpapers={wallpapers} onSelectWallpaper={setSelectedWallpaper} />
+    </SafeAreaView>
   );
 }
 
-function SettingsScreen() {
+// Liked Tab Screen
+function LikedScreen({ wallpapers }: { wallpapers: any[] }) {
+  const [selectedWallpaper, setSelectedWallpaper] = useState(null);
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings Screen</Text> 
-    </View>
+    <SafeAreaView style={styles.container}>
+      <AllWallpapars wallpapers={wallpapers} onSelectWallpaper={setSelectedWallpaper} />
+    </SafeAreaView>
   );
 }
+
+// Library Tab Screen
+function LibraryScreen({ wallpapers }: { wallpapers: any[] }) {
+  const [selectedWallpaper, setSelectedWallpaper] = useState(null);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <AllWallpapars wallpapers={wallpapers} onSelectWallpaper={setSelectedWallpaper} />
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

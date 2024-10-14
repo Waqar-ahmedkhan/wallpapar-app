@@ -1,8 +1,7 @@
 import React, { useCallback, useRef } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { WallpaperType } from '@/hooks/useWallpapar';
-import { BounceOutLeft } from 'react-native-reanimated';
 
 interface DownloadPictureProps {
   onClose: () => void;
@@ -33,10 +32,6 @@ export const DownloadPicture: React.FC<DownloadPictureProps> = ({ onClose, wallp
         <View style={styles.contentContainer}>
           <Image source={{ uri: wallpaper.url }} style={styles.wallpaperPreview} />
           <Text style={styles.wallpaperName}>{wallpaper.name}</Text>
-          <Text style={styles.text}>
-            Do you want to download this wallpaper?
-          </Text>
-           <Button title='download'  />
           <Text style={styles.text}>Awesome 🎉</Text>
         </View>
       </BottomSheet>
