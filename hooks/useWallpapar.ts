@@ -5,6 +5,12 @@ export interface WallpaperType {
   url: string;
   name: string;
 }
+ interface fullwallpaper extends WallpaperType {
+   liked: boolean,
+   suggested: boolean
+   library: boolean
+
+}
 
 // Custom hook to manage wallpapers
 export function useWallpaper() {
@@ -14,27 +20,43 @@ export function useWallpaper() {
 
   // Function to fetch wallpapers (could be replaced with an API call in the future)
   const fetchWallpapers = () => {
-    const staticWallpapers: WallpaperType[] = [
+    const staticWallpapers: fullwallpaper[] = [
       {
         url: "https://ideogram.ai/assets/progressive-image/balanced/response/5z-RDaoCTfK45Bpw8TEBYQ",
-        name: "Colors Eyes"
+        name: "Colors Eyes",
+        liked: true,
+        suggested: true,
+         library: true
 
       },
       {
         url: "https://ideogram.ai/assets/image/lossless/response/TVSlKZYUQrKd6O9uPzVyEw",
         name: "Last Night",
+        liked: false,
+        suggested: true,
+        library: false,
       },
       {
         url: "https://ideogram.ai/assets/progressive-image/balanced/response/JNKysdHPQg-dwbTbXwfhJg",
         name: "Sunrise Bliss",
+        liked: true,
+        suggested: false,
+        library: true,
+
       },
       {
         url: "https://ideogram.ai/assets/progressive-image/balanced/response/sILKkQb9QXOHbfuaT83EVQ",
         name: "Mountain Escape",
+        library: true,
+        suggested: true,
+        liked: false,
       },
       {
         url: "https://ideogram.ai/assets/image/lossless/response/9Gnlqd1aQFiLc4800qsIjg",
         name: "Ocean Serenity",
+        liked: false,
+        suggested: false,
+        library:  true,
       },
     ];
 
