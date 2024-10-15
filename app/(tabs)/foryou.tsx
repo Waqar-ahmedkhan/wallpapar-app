@@ -1,26 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { useWallpaper } from '@/hooks/useWallpapar';
+import { useLikedWallpaper, useSuggestedWallpaper, useLikedLibrary } from '@/hooks/useWallpapar';
 import AllWallpapars from '@/components/AllWallpapars';
 
 const Tab = createMaterialTopTabNavigator();
 
 function MyTabs() {
-  // Fetch all wallpapers once and share it with all screens
-  const { wallpapers } = useWallpaper();
-
   return (
     <Tab.Navigator style={{ paddingTop: '5%' }}>
-      <Tab.Screen name="Suggested">
-        {() => <SuggestedScreen wallpapers={wallpapers} />}
-      </Tab.Screen>
-      <Tab.Screen name="Liked">
-        {() => <LikedScreen wallpapers={wallpapers} />}
-      </Tab.Screen>
-      <Tab.Screen name="Library">
-        {() => <LibraryScreen wallpapers={wallpapers} />}
-      </Tab.Screen>
+      <Tab.Screen name="Suggested" component={SuggestedScreen} />
+      <Tab.Screen name="Liked" component={LikedScreen} />
+      <Tab.Screen name="Library" component={LibraryScreen} />
     </Tab.Navigator>
   );
 }
@@ -28,34 +19,34 @@ function MyTabs() {
 export default MyTabs;
 
 // Suggested Tab Screen
-function SuggestedScreen({ wallpapers }: { wallpapers: any[] }) {
-  const [selectedWallpaper, setSelectedWallpaper] = useState(null);
+function SuggestedScreen() {
+  const suggestedWallpapers = useSuggestedWallpaper();
 
   return (
     <SafeAreaView style={styles.container}>
-      <AllWallpapars wallpapers={wallpapers} onSelectWallpaper={setSelectedWallpaper} />
+      <AllWallpapars wallpapers={suggestedWallpapers} />
     </SafeAreaView>
   );
 }
 
 // Liked Tab Screen
-function LikedScreen({ wallpapers }: { wallpapers: any[] }) {
-  const [selectedWallpaper, setSelectedWallpaper] = useState(null);
+function LikedScreen() {
+  const likedWallpapers = useLikedWallpaper();
 
   return (
     <SafeAreaView style={styles.container}>
-      <AllWallpapars wallpapers={wallpapers} onSelectWallpaper={setSelectedWallpaper} />
+      <AllWallpapars wallpapers={likedWallpapers} />
     </SafeAreaView>
   );
 }
 
 // Library Tab Screen
-function LibraryScreen({ wallpapers }: { wallpapers: any[] }) {
-  const [selectedWallpaper, setSelectedWallpaper] = useState(null);
+function LibraryScreen() {
+  const libraryWallpapers = useLikedLibrary();
 
   return (
     <SafeAreaView style={styles.container}>
-      <AllWallpapars wallpapers={wallpapers} onSelectWallpaper={setSelectedWallpaper} />
+      <AllWallpapars wallpapers={libraryWallpapers} />
     </SafeAreaView>
   );
 }

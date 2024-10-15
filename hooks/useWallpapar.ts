@@ -19,7 +19,7 @@ export function useWallpaper() {
   const [randomWallpaper, setRandomWallpaper] = useState<FullWallpaper | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Function to fetch wallpapers (this could be replaced with an API call in the future)
+ 
   const fetchWallpapers = () => {
     const staticWallpapers: FullWallpaper[] = [
       {
