@@ -1,33 +1,33 @@
-import { useEffect, useState } from 'react';
 
-// Define the WallpaperType interface
+import { useState, useEffect } from 'react';
+
+// Define the wallpaper types
 export interface WallpaperType {
   url: string;
   name: string;
 }
- interface fullwallpaper extends WallpaperType {
-   liked: boolean,
-   suggested: boolean
-   library: boolean
 
+interface FullWallpaper extends WallpaperType {
+  liked: boolean;
+  suggested: boolean;
+  library: boolean;
 }
 
 // Custom hook to manage wallpapers
 export function useWallpaper() {
-  const [wallpapers, setWallpapers] = useState<WallpaperType[]>([]);
-  const [randomWallpaper, setRandomWallpaper] = useState<WallpaperType | null>(null);
+  const [wallpapers, setWallpapers] = useState<FullWallpaper[]>([]);
+  const [randomWallpaper, setRandomWallpaper] = useState<FullWallpaper | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Function to fetch wallpapers (could be replaced with an API call in the future)
+  // Function to fetch wallpapers (this could be replaced with an API call in the future)
   const fetchWallpapers = () => {
-    const staticWallpapers: fullwallpaper[] = [
+    const staticWallpapers: FullWallpaper[] = [
       {
         url: "https://ideogram.ai/assets/progressive-image/balanced/response/5z-RDaoCTfK45Bpw8TEBYQ",
         name: "Colors Eyes",
         liked: true,
         suggested: true,
-         library: true
-
+        library: true,
       },
       {
         url: "https://ideogram.ai/assets/image/lossless/response/TVSlKZYUQrKd6O9uPzVyEw",
@@ -42,21 +42,20 @@ export function useWallpaper() {
         liked: true,
         suggested: false,
         library: true,
-
       },
       {
         url: "https://ideogram.ai/assets/progressive-image/balanced/response/sILKkQb9QXOHbfuaT83EVQ",
         name: "Mountain Escape",
-        library: true,
-        suggested: true,
         liked: false,
+        suggested: true,
+        library: true,
       },
       {
         url: "https://ideogram.ai/assets/image/lossless/response/9Gnlqd1aQFiLc4800qsIjg",
         name: "Ocean Serenity",
         liked: false,
         suggested: false,
-        library:  true,
+        library: true,
       },
     ];
 
@@ -71,4 +70,20 @@ export function useWallpaper() {
   }, []);
 
   return { randomWallpaper, wallpapers, isLoading };
+}
+
+// Custom hooks to filter wallpapers
+export function useSuggestedWallpaper() {
+  const { wallpapers } = useWallpaper();
+  return wallpapers.filter((wallpaper: FullWallpaper) => wallpaper.suggested);
+}
+
+export function useLikedWallpaper() {
+  const { wallpapers } = useWallpaper();
+  return wallpapers.filter((wallpaper: FullWallpaper) => wallpaper.liked);
+}
+
+export function useLikedLibrary() {
+  const { wallpapers } = useWallpaper();
+  return wallpapers.filter((wallpaper: FullWallpaper) => wallpaper.library);
 }
